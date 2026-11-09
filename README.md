@@ -46,7 +46,7 @@ Fork this repository, clone your fork, and run:
 ./setup.sh
 ```
 
-You get a repository in `sandbox/clipstr` with `main` and three branches. Work inside `sandbox/clipstr`.
+You get a repository in `sandbox/clippy` with `main` and three branches. Work inside `sandbox/clippy`.
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 

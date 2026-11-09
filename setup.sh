@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Creates the Clipstr repository with three open feature branches in ./sandbox/clipstr (re-run to start over).
+# Creates the Clippy repository with three open feature branches in ./sandbox/clippy (re-run to start over).
 set -euo pipefail
 cd "$(dirname "$0")"
-rm -rf sandbox; mkdir -p sandbox/clipstr; cd sandbox/clipstr
+rm -rf sandbox; mkdir -p sandbox/clippy; cd sandbox/clippy
 git init -q -b main; git config commit.gpgsign false
-as() { local n="$1"; shift; GIT_AUTHOR_NAME="$n" GIT_AUTHOR_EMAIL="${n%% *}@clipstr.dev" GIT_COMMITTER_NAME="$n" GIT_COMMITTER_EMAIL="${n%% *}@clipstr.dev" "$@"; }
+as() { local n="$1"; shift; GIT_AUTHOR_NAME="$n" GIT_AUTHOR_EMAIL="${n%% *}@clippy.dev" GIT_COMMITTER_NAME="$n" GIT_COMMITTER_EMAIL="${n%% *}@clippy.dev" "$@"; }
 git config user.name "$(git config --global user.name 2>/dev/null || echo You)"; git config user.email "$(git config --global user.email 2>/dev/null || echo you@example.com)"
 
 cat > config.yaml <<'Y'
 app:
-  name: clipstr
+  name: clippy
   port: 8000
 limits:
   max_url_length: 2048
@@ -29,7 +29,7 @@ cat > app.py <<'P'
 def shorten(url):
     return "abc123"
 P
-git add -A; as "Maya Santos" git commit -q -m "Clipstr baseline"
+git add -A; as "Maya Santos" git commit -q -m "Clippy baseline"
 
 git switch -q -c feature/aliases
 sed -i.b 's/^  max_url_length: 2048/  max_url_length: 2048\n  max_alias_length: 32/; s/^  qr: false/  qr: false\n  aliases: true/' config.yaml
@@ -46,7 +46,7 @@ git add -A; as "Tomas Costa" git commit -q -m "Rate limiting per client IP"
 
 git switch -q main; git switch -q -c feature/container
 sed -i.b 's/^  port: 8000/  port: 80/' config.yaml
-sed -i.b 's/RUN pip install -r requirements.txt/RUN pip install -r requirements.txt \&\& adduser --system clipstr\nUSER clipstr/; s/"--port", "8000"\]/"--port", "80", "--workers", "2"]/' Dockerfile; rm -f *.b
+sed -i.b 's/RUN pip install -r requirements.txt/RUN pip install -r requirements.txt \&\& adduser --system clippy\nUSER clippy/; s/"--port", "8000"\]/"--port", "80", "--workers", "2"]/' Dockerfile; rm -f *.b
 git add -A; as "Maya Santos" git commit -q -m "Run as a non-root user with two workers"
 
 git switch -q main

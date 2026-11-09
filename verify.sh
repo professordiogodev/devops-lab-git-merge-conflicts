@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Checks the end state of main in the sandbox. Run with: ./verify.sh
 set -uo pipefail
-cd "$(dirname "$0")/sandbox/clipstr" 2>/dev/null || { echo "Run ./setup.sh first"; exit 1; }
+cd "$(dirname "$0")/sandbox/clippy" 2>/dev/null || { echo "Run ./setup.sh first"; exit 1; }
 pass=0; failn=0
 check() { local d="$1"; shift; if "$@" >/dev/null 2>&1; then echo "PASS  $d"; pass=$((pass+1)); else echo "FAIL  $d"; failn=$((failn+1)); fi; }
 has() { grep -qE "$2" "$1"; }
