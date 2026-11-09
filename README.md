@@ -1,6 +1,4 @@
-# Git: The Three-Way Collision
-
-Three features, one config file, release in an hour. Merge them all without losing anybody's work.
+<p align="center"><img src="assets/banner.svg" alt="Git: The Three-Way Collision" width="100%"></p>
 
 | | |
 |-|-|
@@ -17,9 +15,10 @@ Three features, one config file, release in an hour. Merge them all without losi
 5. Commit and push. Open the **Actions** tab of your fork (click *I understand my workflows, go ahead and enable them* the first time). The **Lab check** shows what is still missing.
 6. When the check is green, **submit the URL of your fork** in the course platform.
 
+> [!NOTE]
 > The check only looks at your answers and any files the lab asks you to commit. Your instructor reads your work and may ask you to explain any line.
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## The situation
 
@@ -27,6 +26,7 @@ Friday, 15:00. The release freezes at 16:00. Three developers have three finishe
 
 You are the one who merges. Nobody's work may disappear, and `main` must still build.
 
+> [!IMPORTANT]
 > **Your mission**
 > - Read each branch to understand what its author wanted
 > - Merge all three into `main` and resolve every conflict **on purpose**
@@ -34,7 +34,7 @@ You are the one who merges. Nobody's work may disappear, and `main` must still b
 
 **Time:** 40-50 min | **Cost:** free | **You need:** Git in your Ubuntu environment
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Part 0 - Set the scene
 
@@ -46,7 +46,7 @@ Fork this repository, clone your fork, and run:
 
 You get a repository in `sandbox/clipstr` with `main` and three branches. Work inside `sandbox/clipstr`.
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Part 1 - Recon: what does each branch want?
 
@@ -59,9 +59,10 @@ git diff main...feature/aliases
 
 (and the same for `ratelimit` and `container`). Note which **files and lines** each branch changes. Draw a small table: file, branch A, branch B, branch C.
 
+> [!NOTE]
 > **Predict** Before merging anything: which files do you expect to conflict, and between which branches? Which will **not** conflict even though two branches changed them?
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Part 2 - Merge, one at a time
 
@@ -72,8 +73,10 @@ Merge `feature/aliases` first, then `feature/ratelimit`, then `feature/container
 3. Check there are no `<<<<<<<`, `=======` or `>>>>>>>` lines left (`git grep -n '<<<<<<<'`).
 4. `git add` the file, then `git commit` to finish the merge.
 
+> [!WARNING]
 > **Break it** Before you resolve the **second** merge, try the shortcut on one file: `git checkout --theirs config.yaml`. Look at what is left in the file. Which feature just disappeared? Undo it with `git merge --abort` and start that merge again. (Abort throws away the half-finished merge safely, learn that command now.)
 
+> [!NOTE]
 > **Think** Some conflicts are *textual* (the same line) and some are *semantic* (Git merges cleanly and the result is still wrong, for example two branches both add a `pip install` line). Which did you meet here?
 
 Pay attention to these three, they are the classic traps:
@@ -82,7 +85,7 @@ Pay attention to these three, they are the classic traps:
 - `app.py`: two branches changed the same function signature. The final signature must support both features.
 - `Dockerfile`: two branches changed the same `RUN` line differently. Combine them into **one** command.
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Part 3 - Make sure it still works
 
@@ -95,7 +98,7 @@ python3 -m py_compile app.py
 
 Read the final `Dockerfile` as if you were about to build it. Does the order of lines make sense (user created before it is used)? Does the port in `config.yaml` match the port in the Dockerfile?
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Part 4 - Prove it
 
@@ -105,7 +108,7 @@ Read the final `Dockerfile` as if you were about to build it. Does the order of 
 
 It checks that all three branches are merged, that no markers remain and that **every author's change survived**.
 
----
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
 ## Level up (optional)
 
