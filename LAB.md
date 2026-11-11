@@ -2,9 +2,19 @@
 
 ## The situation
 
-Friday, 15:00. The release freezes at 16:00. Three developers have three finished branches and every one of them touched `config.yaml`. Priya added custom aliases, Tomas added rate limiting and Maya made the container run as a non-root user. Nobody wants to merge first because everybody remembers last month.
+```text
+clippy-core  /  pull requests                                  release freeze in 60 minutes
 
-You are the one who merges. Nobody's work may disappear, and `main` must still build.
+#341  Custom aliases for short links     Priya   approved   "needs rebase"
+#343  Rate limiting per API key          Tomas   approved   "needs rebase"
+#344  Run the container as non-root     Maya    approved   "needs rebase"
+
+merge queue: empty        reviewers online: you
+```
+
+Three pull requests, three approvals, and every one of them touched `config.yaml`. Each author wrote "needs rebase" under their own PR, and each is waiting for somebody else to merge first, because everybody remembers last month. You are the maintainer on duty, so you are the one who merges.
+
+The rules of the queue: nobody's work may disappear, and `main` must still build. A pull request that merges without a conflict is not necessarily correct, and one that conflicts is not necessarily wrong. Your job is to **review the result**, not to make the red text go away.
 
 > **Your mission**
 > - Read each branch to understand what its author wanted
@@ -15,7 +25,7 @@ You are the one who merges. Nobody's work may disappear, and `main` must still b
 
 ---
 
-## Part 0 - Set the scene
+## Part 0 - Open the queue
 
 Fork this repository, clone your fork, and run:
 
@@ -27,7 +37,7 @@ You get a repository in `sandbox/clippy` with `main` and three branches. Work in
 
 ---
 
-## Part 1 - Recon: what does each branch want?
+## Part 1 - Recon: read the three pull requests
 
 For each of the three branches, run:
 
@@ -42,7 +52,7 @@ git diff main...feature/aliases
 
 ---
 
-## Part 2 - Merge, one at a time
+## Part 2 - Merge them, one at a time
 
 Merge `feature/aliases` first, then `feature/ratelimit`, then `feature/container`, each with `git merge`. For every merge that stops with a conflict:
 
@@ -63,9 +73,9 @@ Pay attention to these three, they are the classic traps:
 
 ---
 
-## Part 3 - Make sure it still works
+## Part 3 - Review the merged result like a reviewer
 
-A clean merge is not a correct merge. Review the final files:
+A clean merge is not a correct merge. Before you approve your own merge, read the final files as if somebody else had written them:
 
 ```bash
 git diff main~3 main -- config.yaml Dockerfile requirements.txt app.py
